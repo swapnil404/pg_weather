@@ -104,7 +104,7 @@ func Layout(result weather.Result, m metrics.DBMetrics, connStr string) string {
 		labelStyle.Render("dead tuples:  "),
 		valueStyle.Render(fmt.Sprintf("%.1f%%", m.DeadTuplesRatio)),
 		labelStyle.Render("longest query:"),
-		valueStyle.Render(fmt.Sprintf("%.1fs", m.LongestQuerySecs)),
+		valueStyle.Render(fmt.Sprintf("%.1fs", max(0, m.LongestQuerySecs))),
 	)
 
 	reason := fmt.Sprintf("\n  %s", accentStyle.Render(result.Reason))

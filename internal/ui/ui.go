@@ -5,7 +5,7 @@ import (
 	"time"
 
 	tea "github.com/charmbracelet/bubbletea"
-	"github.com/jackc/pgx/v5"
+	"github.com/jackc/pgx/v5/pgxpool"
 	"github.com/swapnil404/pg_weather/internal/db"
 	"github.com/swapnil404/pg_weather/internal/metrics"
 	"github.com/swapnil404/pg_weather/internal/render"
@@ -15,15 +15,15 @@ import (
 type tickMsg time.Time
 
 type model struct {
-	conn      *pgx.Conn
-	metrics   metrics.DBMetrics
-	result    weather.Result
-	connStr   string
-	interval  time.Duration
-	err       error
+	conn     *pgxpool.Pool
+	metrics  metrics.DBMetrics
+	result   weather.Result
+	connStr  string
+	interval time.Duration
+	err      error
 }
 
-func New(conn *pgx.Conn, connStr string, interval time.Duration) model {
+func New(conn *pgxpool.Pool, connStr string, interval time.Duration) model {
 	return model{
 		conn:     conn,
 		connStr:  connStr,
